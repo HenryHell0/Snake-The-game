@@ -40,7 +40,7 @@ function fillBackground(){
 	ctx.closePath();
 }
 
-function makeSquare(xpos, ypos){
+function makeSnake(xpos, ypos){
 	ctx.beginPath();
 	ctx.fillStyle = "white";
 	ctx.rect(xpos, ypos, 1 * gs, 1 * gs);
@@ -56,29 +56,17 @@ function gameInterval(){
 	xpos += xvelo;
 	ypos += yvelo;
 	fillBackground();
-	makeSquare(xpos, ypos);
-	tailx[0] = tailx[1];
-	taily[0] = taily[1];
-	makeSquare(tailx[0], taily[0]);
-	tailx[0] = tailx[1];
-	taily[0] = taily[1];
-	makeSquare(tailx[0], taily[0]);
-	tailx[1] = tailx[2];
-	taily[1] = taily[2];
-	makeSquare(tailx[1], taily[1]);
-	tailx[2] = tailx[3];
-	taily[2] = taily[3];
-	makeSquare(tailx[2], taily[2]);
-	tailx[3] = tailx[4];
-	taily[3] = taily[4];
-	makeSquare(tailx[3], taily[3]);
-	tailx[4] = tailx[5];
-	taily[4] = taily[5];
-	makeSquare(tailx[4], taily[4]);
-	tailx[5] = xpos;
-	taily[5] = ypos;
-	makeSquare(tailx[5], taily[5]);
-	
+	makeSnake(xpos, ypos);
+	tailx.push(xpos);
+	tailx.shift();
+	taily.push(ypos);
+	taily.shift();
+	makeSnake(tailx[0], taily[0]);
+	makeSnake(tailx[1], taily[1]);
+	makeSnake(tailx[2], taily[2]);
+	makeSnake(tailx[3], taily[3]);
+	makeSnake(tailx[4], taily[4]);
+	makeSnake(tailx[5], taily[5]);
 
 	if (xpos <= 0 && xvelo == -1 * gs) {
 		xpos = 20 * gs;
