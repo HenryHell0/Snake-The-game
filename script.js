@@ -5,8 +5,7 @@ var xpos = 9 * gs;
 var ypos = 9 * gs;
 var xvelo = 0;
 var yvelo = 0;
-var tailx = [0, 20 * gs, 20 * gs, 20 * gs, 20 * gs, 20 * gs];
-var taily = [0, 20 * gs, 20 * gs, 20 * gs, 20 * gs, 20 * gs];
+var tail = [{x:0, y:0}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}];
 
 document.addEventListener("keydown", keyPressed);
 
@@ -45,6 +44,7 @@ function makeSnake(xpos, ypos){
 	ctx.fillStyle = "white";
 	ctx.rect(xpos, ypos, 1 * gs, 1 * gs);
 	ctx.fill();
+	ctx.closePath();
 }
 
 fillBackground();
@@ -57,28 +57,23 @@ function gameInterval(){
 	ypos += yvelo;
 	fillBackground();
 	makeSnake(xpos, ypos);
-	tailx.push(xpos);
-	tailx.shift();
-	taily.push(ypos);
-	taily.shift();
-	makeSnake(tailx[0], taily[0]);
-	makeSnake(tailx[1], taily[1]);
-	makeSnake(tailx[2], taily[2]);
-	makeSnake(tailx[3], taily[3]);
-	makeSnake(tailx[4], taily[4]);
-	makeSnake(tailx[5], taily[5]);
+	tail.push({x:xpos, y:ypos})
+	tail.shift();
+	for (var i = 0; i < tail.length; i++) {
+		makeSnake(tail[i].x, tail[i].y);
+	}
 
 	if (xpos <= 0 && xvelo == -1 * gs) {
 		xpos = 20 * gs;
 	}
 	if (xpos >= 20 * gs && xvelo == 1 * gs) {
-		xpos = 0;
+		xpos = -1 * gs;
 	}
 	if (ypos <= 0 && yvelo == -1 * gs) {
 		ypos = 20 *gs;
 	}
 	if (ypos >= 20 * gs && yvelo == 1 * gs) {
-		ypos = 0;
+		ypos = -1 * gs;
 	}
 }
 
