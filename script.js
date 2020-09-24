@@ -64,7 +64,7 @@ function frameLagFix(){
 
 fillBackground();
 
-setInterval(gameInterval, 1000/5);
+setInterval(gameInterval, 1000/10);
 
 function gameInterval(){
 	console.log("hello");
