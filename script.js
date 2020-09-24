@@ -5,6 +5,7 @@ var xpos = 9;
 var ypos = 9;
 var xvelo = 0;
 var yvelo = 0;
+var isPaused = false;
 var appleX = Math.floor(Math.random() * 20);
 var appleY = Math.floor(Math.random() * 20);
 var tail = [{x:0, y:0}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}];
@@ -30,6 +31,17 @@ function keyPressed(){
 	if (event.keyCode == 40 && yvelo != -1) {
 		xvelo = 0;
 		yvelo = 1;
+}
+	if (event.keyCode == 32) {
+		if (!isPaused) {
+			game = clearInterval(game);
+			isPaused = true;
+		} 
+		else if (isPaused) {
+			game = setInterval(gameInterval, 1000/8);
+			isPaused = false;
+		}
+
 }
 }
 
@@ -64,7 +76,7 @@ function frameLagFix(){
 
 fillBackground();
 
-setInterval(gameInterval, 1000/8);
+var game = setInterval(gameInterval, 1000/8);
 
 function gameInterval(){
 	console.log("hello");

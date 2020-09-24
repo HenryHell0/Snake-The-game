@@ -3,4 +3,4 @@ Its snake
 <br>
 Use the arrow keys to control
 <br>
-now with pausing
+now with pausing(press space)
