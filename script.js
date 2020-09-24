@@ -1,33 +1,35 @@
-var canvas = document.getElementById("canvas")
+var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var gs = 20;
-var xpos = 9 * gs;
-var ypos = 9 * gs;
+var xpos = 9;
+var ypos = 9;
 var xvelo = 0;
 var yvelo = 0;
-var tail = [{x:0, y:0}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}, {x:20 * gs, y:20 * gs}];
+var appleX = Math.floor(Math.random() * 20);
+var appleY = Math.floor(Math.random() * 20);
+var tail = [{x:0, y:0}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}];
 
 document.addEventListener("keydown", keyPressed);
 
 function keyPressed(){
-	if (event.keyCode == 37) {
-		xvelo = -1 * gs;
+	if (event.keyCode == 37 && xvelo != 1) {
+		xvelo = -1;
 		yvelo = 0;
 }
 
-	if (event.keyCode == 38) {
+	if (event.keyCode == 38 && yvelo != 1) {
 		xvelo = 0;
-		yvelo = -1 * gs;
+		yvelo = -1;
 }
 
-	if (event.keyCode == 39) {
-		xvelo = 1 * gs;
+	if (event.keyCode == 39 && xvelo != -1) {
+		xvelo = 1;
 		yvelo = 0;
 }
 
-	if (event.keyCode == 40) {
+	if (event.keyCode == 40 && yvelo != -1) {
 		xvelo = 0;
-		yvelo = 1 * gs;
+		yvelo = 1;
 }
 }
 
@@ -39,10 +41,18 @@ function fillBackground(){
 	ctx.closePath();
 }
 
+function makeApple(applex, appley){
+	ctx.beginPath();
+	ctx.fillStyle = "red";
+	ctx.rect(applex * gs, appley * gs, 1 * gs, 1 * gs);
+	ctx.fill();
+	ctx.closePath();
+}
+
 function makeSnake(xpos, ypos){
 	ctx.beginPath();
 	ctx.fillStyle = "white";
-	ctx.rect(xpos, ypos, 1 * gs, 1 * gs);
+	ctx.rect(xpos * gs, ypos * gs, 1 * gs, 1 * gs);
 	ctx.fill();
 	ctx.closePath();
 }
@@ -57,23 +67,51 @@ function gameInterval(){
 	ypos += yvelo;
 	fillBackground();
 	makeSnake(xpos, ypos);
+	makeApple(appleX, appleY);
 	tail.push({x:xpos, y:ypos})
 	tail.shift();
-	for (var i = 0; i < tail.length; i++) {
+	for (var i = 0; i < tail.length - 1; i++) {
 		makeSnake(tail[i].x, tail[i].y);
+		if (tail[i].x == xpos && tail[i].y == ypos) {
+			fillBackground();
+			tail.length = 6;
+			tail[0].x = 20;
+			tail[1].x = 20;
+			tail[2].x = 20;
+			tail[3].x = 20;
+			tail[4].x = 20;
+			tail[5].x = 20;
+			tail[0].y = 20;
+			tail[1].y = 20;
+			tail[2].y = 20;
+			tail[3].y = 20;
+			tail[4].y = 20;
+			tail[5].y = 20;
+			xpos = 9;
+			ypos = 9;
+			makeSnake(xpos, ypos);
+			makeApple(appleX, appleY)
+			xvelo = 0;
+			yvelo = 0;
+		}
 	}
 
-	if (xpos <= 0 && xvelo == -1 * gs) {
-		xpos = 20 * gs;
+	if (xpos == appleX && ypos == appleY) {
+		appleX = Math.floor(Math.random() * 20);
+		appleY = Math.floor(Math.random() * 20);
+		tail.unshift({x:20, y:20});
 	}
-	if (xpos >= 20 * gs && xvelo == 1 * gs) {
-		xpos = -1 * gs;
+	if (xpos <= -1) {
+		xpos = 20;
 	}
-	if (ypos <= 0 && yvelo == -1 * gs) {
-		ypos = 20 *gs;
+	if (xpos >= 20 && xvelo != -1) {
+		xpos = -1;
 	}
-	if (ypos >= 20 * gs && yvelo == 1 * gs) {
-		ypos = -1 * gs;
+	if (ypos <= -1) {
+		ypos = 20;
+	}
+	if (ypos >= 20 && yvelo != -1) {
+		ypos = -1;
 	}
 }
 
