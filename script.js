@@ -108,15 +108,23 @@ function gameInterval(){
 		frameLagFix();
 	}
 	if (xpos <= -1) {
+		xvelo = -1;
+		yvelo = 0;
 		xpos = 20;
 	}
 	if (xpos >= 20 && xvelo != -1) {
+		xvelo = 1;
+		yvelo = 0;
 		xpos = -1;
 	}
 	if (ypos <= -1) {
+		yvelo = -1;
+		xvelo = 0;
 		ypos = 20;
 	}
 	if (ypos >= 20 && yvelo != -1) {
+		yvelo = 1;
+		xvelo = 0;
 		ypos = -1;
 	}
 }
