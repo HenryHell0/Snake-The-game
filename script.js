@@ -57,6 +57,11 @@ function makeSnake(xpos, ypos){
 	ctx.closePath();
 }
 
+function frameLagFix(){
+	makeSnake(xpos, ypos);
+	makeApple(appleX, appleY);
+}
+
 fillBackground();
 
 setInterval(gameInterval, 1000/5);
@@ -73,7 +78,6 @@ function gameInterval(){
 	for (var i = 0; i < tail.length - 1; i++) {
 		makeSnake(tail[i].x, tail[i].y);
 		if (tail[i].x == xpos && tail[i].y == ypos) {
-			fillBackground();
 			tail.length = 6;
 			tail[0].x = 20;
 			tail[1].x = 20;
@@ -89,6 +93,7 @@ function gameInterval(){
 			tail[5].y = 20;
 			xpos = 9;
 			ypos = 9;
+			fillBackground();
 			makeSnake(xpos, ypos);
 			makeApple(appleX, appleY)
 			xvelo = 0;
@@ -100,6 +105,7 @@ function gameInterval(){
 		appleX = Math.floor(Math.random() * 20);
 		appleY = Math.floor(Math.random() * 20);
 		tail.unshift({x:20, y:20});
+		frameLagFix();
 	}
 	if (xpos <= -1) {
 		xpos = 20;
