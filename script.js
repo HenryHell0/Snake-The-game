@@ -13,22 +13,22 @@ var tail = [{x:0, y:0}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, 
 document.addEventListener("keydown", keyPressed);
 
 function keyPressed(){
-	if (event.keyCode == 37 && xvelo != 1) {
+	if (event.keyCode == 37 && xvelo != 1 && !isPaused) {
 		xvelo = -1;
 		yvelo = 0;
 }
 
-	if (event.keyCode == 38 && yvelo != 1) {
+	if (event.keyCode == 38 && yvelo != 1 && !isPaused) {
 		xvelo = 0;
 		yvelo = -1;
 }
 
-	if (event.keyCode == 39 && xvelo != -1) {
+	if (event.keyCode == 39 && xvelo != -1 && !isPaused) {
 		xvelo = 1;
 		yvelo = 0;
 }
 
-	if (event.keyCode == 40 && yvelo != -1) {
+	if (event.keyCode == 40 && yvelo != -1 && !isPaused) {
 		xvelo = 0;
 		yvelo = 1;
 }
