@@ -6,7 +6,6 @@ var ypos = 9;
 var xvelo = 0;
 var yvelo = 0;
 var isPaused = false;
-var canMove = true;
 var appleX = Math.floor(Math.random() * 20);
 var appleY = Math.floor(Math.random() * 20);
 var tail = [{x:0, y:0}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}];
@@ -14,25 +13,25 @@ var tail = [{x:0, y:0}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, {x:20, y:20}, 
 document.addEventListener("keydown", keyPressed);
 
 function keyPressed(){
-	if (event.keyCode == 37 && xvelo != 1 && !isPaused && canMove) {
+	if (event.keyCode == 37 && xvelo != 1 && !isPaused) {
 		xvelo = -1;
 		yvelo = 0;
         canMove = false;
 }
 
-	if (event.keyCode == 38 && yvelo != 1 && !isPaused && canMove) {
+	if (event.keyCode == 38 && yvelo != 1 && !isPaused) {
 		xvelo = 0;
 		yvelo = -1;
         canMove = false;
 }
 
-	if (event.keyCode == 39 && xvelo != -1 && !isPaused && canMove) {
+	if (event.keyCode == 39 && xvelo != -1 && !isPaused) {
 		xvelo = 1;
 		yvelo = 0;
         canMove = false;
 }
 
-	if (event.keyCode == 40 && yvelo != -1 && !isPaused && canMove) {
+	if (event.keyCode == 40 && yvelo != -1 && !isPaused) {
 		xvelo = 0;
 		yvelo = 1;
         canMove = false;
@@ -144,6 +143,5 @@ function gameInterval(){
 		xvelo = 0;
 		ypos = -1;
 	}
-    canMove = true;
 }
 
